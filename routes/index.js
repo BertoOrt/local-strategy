@@ -10,11 +10,11 @@ router.get('/home', function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-  res.render('login');
+  res.render('auth/login');
 });
 
 router.get('/signup', function(req, res, next) {
-  res.render('signup');
+  res.render('auth/signup');
 });
 
 router.post('/login', function(req, res, next) {
