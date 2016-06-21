@@ -5,7 +5,6 @@ var db = require('./db/api');
 var LocalStrategy = require('passport-local').Strategy;
 
 passport.use(new LocalStrategy(function(username, password, done) {
-    console.log('Logging in...')
     db.findUserByUsername(username).then(function(user){
       if(user &&  bcrypt.compareSync(password, user.password)) {
         return done(null, user);
@@ -15,7 +14,8 @@ passport.use(new LocalStrategy(function(username, password, done) {
     }).catch(function(err){
       return done(err);
     })
-}));
+  })
+);
 
 function createUser(user) {
   var hash = bcrypt.hashSync(user.password, 8);

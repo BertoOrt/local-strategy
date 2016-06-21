@@ -24,18 +24,16 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-  res.render('login');
+  res.render('auth/login');
 });
 
 router.get('/signup', function(req, res, next) {
-  res.render('signup');
+  res.render('auth/signup');
 });
 
 router.post('/login', function(req, res, next) {
-  auth.passport.authenticate('local',
-  function (err, user, info){
+  auth.passport.authenticate('local', function (err, user, info){
     if(err) return next(err);
-    console.log("THIS?", user);
     if(user) {
       req.session.userId = user.id;
       res.redirect('/')
@@ -47,7 +45,7 @@ router.post('/login', function(req, res, next) {
 
 router.post('/signup', function(req, res, next) {
   db.findUserByUsername(req.body.username).then(function(user){
-    res.render('signup', {error: "username in use"})
+    res.render('auth/signup', {error: "username in use"})
   }).catch(function(err){
     if(err.notFound) {
       auth.createUser({
